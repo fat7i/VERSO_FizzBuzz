@@ -22,3 +22,26 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Validator\NumberValidator: ~
+    App\Validator\RangeValidator: ~
+    App\Validator\RangeSizeValidator:
+        arguments:
+            $maxRange: 1000
+    App\Validator\NumericValidator: ~
+
+    App\Validator\Validator:
+        arguments:
+            $validators:
+                - '@App\Validator\NumericValidator'
+                - '@App\Validator\NumberValidator'
+                - '@App\Validator\RangeValidator'
+                - '@App\Validator\RangeSizeValidator'
+
+    App\Service\FizzService: ~
+    App\Service\BuzzService: ~
+
+    App\Service\FizzBuzzService:
+        arguments:
+            $rules:
+                - '@App\Service\FizzService'
+                - '@App\Service\BuzzService'
